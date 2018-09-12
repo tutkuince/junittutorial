@@ -26,7 +26,7 @@ class FizzBuzzTest {
 
 	@Test
 	void returnBuzzWhenTheNumberIsDividedByFive() {
-
+		assertEquals("Buzz", fizzBuzz.stringFor(5));
 	}
 
 }
