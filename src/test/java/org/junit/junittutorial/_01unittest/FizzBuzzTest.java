@@ -33,5 +33,10 @@ class FizzBuzzTest {
 	void returnFizzBuzzWhenTheNumberIsDividedThreeAndFive() {
 		assertEquals("FizzBuzz", fizzBuzz.stringFor(15));
 	}
+	
+	@Test
+	void returnTheNumberItselfWhenTheNumberIsNotDividedAnyOfThreeOrFive() throws Exception {
+		assertEquals("7", fizzBuzz.stringFor(7));
+	}
 
 }
