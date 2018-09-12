@@ -9,7 +9,7 @@ public class FizzBuzz {
 
 	public String stringFor(int number) {
 
-		if (number < 1) {
+		if (number < 1 || number > 100) {
 			throw new IllegalArgumentException();
 		}
 

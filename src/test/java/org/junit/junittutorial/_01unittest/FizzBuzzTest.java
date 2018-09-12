@@ -42,6 +42,7 @@ class FizzBuzzTest {
 	@Test
 	void throwsIllegalArgumentExceptionWhenTheNumberIsLessThanOneOrGreaterThanHundred() {
 		assertThrows(IllegalArgumentException.class, () -> fizzBuzz.stringFor(-1));
+		assertThrows(IllegalArgumentException.class, () -> fizzBuzz.stringFor(101));
 	}
 
 }
