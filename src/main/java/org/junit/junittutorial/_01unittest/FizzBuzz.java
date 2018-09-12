@@ -8,7 +8,9 @@ package org.junit.junittutorial._01unittest;
 public class FizzBuzz {
 
 	public String stringFor(int number) {
-		// TODO Auto-generated method stub
+		if (number % 3 == 0) {
+			return "Fizz";
+		}
 		return null;
 	}
 
