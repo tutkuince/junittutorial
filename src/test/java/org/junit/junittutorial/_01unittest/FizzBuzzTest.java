@@ -14,7 +14,6 @@ class FizzBuzzTest {
 	@Test
 	void returnFizzWhenTheNumberIsDividedByThree() {
 		FizzBuzz fizzBuzz = new FizzBuzz();
-		
 		assertEquals("Fizz", fizzBuzz.stringFor(3));
 	}
 
