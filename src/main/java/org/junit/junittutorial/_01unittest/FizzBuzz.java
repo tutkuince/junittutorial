@@ -8,6 +8,11 @@ package org.junit.junittutorial._01unittest;
 public class FizzBuzz {
 
 	public String stringFor(int number) {
+
+		if (number < 1) {
+			throw new IllegalArgumentException();
+		}
+
 		if (number % 15 == 0) {
 			return "FizzBuzz";
 		} else if (number % 3 == 0) {

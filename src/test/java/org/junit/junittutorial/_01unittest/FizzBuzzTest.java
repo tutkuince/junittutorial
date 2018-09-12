@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test;
  * @since Sep 12, 2018
  */
 class FizzBuzzTest {
-	
+
 	private FizzBuzz fizzBuzz;
-	
+
 	@BeforeEach
 	void setUp() {
 		fizzBuzz = new FizzBuzz();
@@ -28,15 +28,20 @@ class FizzBuzzTest {
 	void returnBuzzWhenTheNumberIsDividedByFive() {
 		assertEquals("Buzz", fizzBuzz.stringFor(5));
 	}
-	
+
 	@Test
 	void returnFizzBuzzWhenTheNumberIsDividedThreeAndFive() {
 		assertEquals("FizzBuzz", fizzBuzz.stringFor(15));
 	}
-	
+
 	@Test
 	void returnTheNumberItselfWhenTheNumberIsNotDividedAnyOfThreeOrFive() throws Exception {
 		assertEquals("7", fizzBuzz.stringFor(7));
+	}
+
+	@Test
+	void throwsIllegalArgumentExceptionWhenTheNumberIsLessThanOneOrGreaterThanHundred() {
+		assertThrows(IllegalArgumentException.class, () -> fizzBuzz.stringFor(-1));
 	}
 
 }
