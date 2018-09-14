@@ -3,6 +3,7 @@ package org.junit.junittutorial._02elementary._01example;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.Duration;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
@@ -92,5 +93,31 @@ public class StudentTest {
 		final IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class,
 				() -> stdTutku.addCourse(null));
 		assertEquals("Can't add course with null lecturer course record", illegalArgumentException.getMessage());
+	}
+
+	/**
+	 * timeoutNotExceeded 
+	 * timeoutNotExceededWithResult 
+	 * timeoutNotExceededWithMethod
+	 * timeoutExceeded 
+	 * timeoutExceededWithPreemptiveTermination
+	 */
+	@Test
+	@DisplayName("Add course to a student less than 10ms")
+	void addCourseToStudentWithTimeConstraint() {
+		assertTimeout(Duration.ofMillis(10), () -> {
+			// nothing will be done and this code run under 10ms
+		});
+
+		final String result = assertTimeout(Duration.ofMillis(10), () -> {
+			// return a string and this code run under 10ms
+			return "some string result";
+		});
+		assertEquals("some string result", result);
+
+		final Student student = new Student("1", "Tutku", "Ince");
+		assertTimeout(Duration.ofMillis(6), () -> student.addCourse(new Object()));
+
+		assertTimeoutPreemptively(Duration.ofMillis(6), () -> student.addCourse(new Object()));
 	}
 }
