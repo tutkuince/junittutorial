@@ -2,9 +2,11 @@ package org.junit.junittutorial._02elementary._01example;
 
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.*;
 
 import java.time.Duration;
 import java.util.stream.Stream;
+
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -119,5 +121,24 @@ public class StudentTest {
 		assertTimeout(Duration.ofMillis(6), () -> student.addCourse(new Object()));
 
 		assertTimeoutPreemptively(Duration.ofMillis(6), () -> student.addCourse(new Object()));
+	}
+
+
+	@Test
+	@DisplayName("Test student creation at different environments")
+	void shouldCreateStudentWithNameAndSurnameWithSpecificEnvironment() {
+		final Student stdTutku = new Student("1", "Tutku", "Ince");
+		
+		final String env = System.getenv("ENV");
+		
+		assumingThat(env != null && env.equals("dev"), () -> {
+			stdTutku.addCourse(new Object());
+			assertEquals(1, stdTutku.getStudentCourseRecords().size());
+		});
+		
+		assertAll("Student Information",
+				() -> assertEquals("Tutku", stdTutku.getName()),
+				() -> assertEquals("Ince", stdTutku.getSurname()),
+				() -> assertEquals("1", stdTutku.getId()));
 	}
 }
