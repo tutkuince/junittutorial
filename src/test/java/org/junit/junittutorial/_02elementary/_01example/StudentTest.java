@@ -31,15 +31,16 @@ public class StudentTest {
 			Student stdEmin = new Student("id1", "Emin", "Koklu");
 			return stdEmin.getName().endsWith("U");
 		}, () -> "Student's name ends with U");
-		
+
 		final Student stdUgur = new Student("2", "Ugur", "Batikan");
-		
-		assertArrayEquals(new String[] {"Tutku", "Ugur" }, Stream.of(stdTutku, stdUgur).map(Student::getName).toArray());
-		
+
+		assertArrayEquals(new String[] { "Tutku", "Ugur" },
+				Stream.of(stdTutku, stdUgur).map(Student::getName).toArray());
+
 		Student student = stdTutku;
-		
-		assertSame(stdTutku, student);		// stdTutku == student
-		assertNotSame(stdUgur, student);	// stdUgur != student
-		
+
+		assertSame(stdTutku, student); // stdTutku == student
+		assertNotSame(stdUgur, student); // stdUgur != student
+
 	}
 }
