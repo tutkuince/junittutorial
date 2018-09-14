@@ -1,5 +1,7 @@
 package org.junit.junittutorial._02elementary._01example;
 
+import java.util.List;
+
 /**
  * @author Tutku Ince
  *
@@ -31,6 +33,10 @@ public class Student {
 	public void addCourse(Object lecturerCourseRecord) {
 		if (lecturerCourseRecord == null)
 			throw new IllegalArgumentException("Can't add course with null lecturer course record");
+	}
+
+	public List<Object> getStudentCourseRecords() {
+		return null;
 	}
 
 }
