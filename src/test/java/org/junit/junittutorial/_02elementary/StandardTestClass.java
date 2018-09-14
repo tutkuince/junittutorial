@@ -14,25 +14,32 @@ import org.junit.jupiter.api.Test;
  * @author Tutku Ince
  *
  * @since Sep 14, 2018
+ * 
+ * This methods must be;
+ * 	+ void
+ * 	+ package accessible
+ * 	+ if method is private, JUnit ignore this methods
+ * 
+ * 
  */
 public class StandardTestClass {
 
 	private static String oneInstancePerClass;
 	private Integer oneInstancePreMethod;
 
-	@BeforeAll
+	@BeforeAll	// is static as a default. Execute just once
 	static void initAll() {
 		oneInstancePerClass = String.valueOf(new Random().nextInt());
 		System.out.println("init Before All Test Method");
 	}
 
-	@AfterAll
+	@AfterAll	// is static as a default. Execute just once
 	static void tearDownAll() {
 		oneInstancePerClass = null;
 		System.out.println("Tear Down After All Test Method");
 	}
 
-	@BeforeEach
+	@BeforeEach	// new instance
 	void init() {
 		oneInstancePreMethod = new Random().nextInt();
 		System.out.println("Init Before Each Test Method");
@@ -55,13 +62,13 @@ public class StandardTestClass {
 	}
 
 	@Test
-	@Disabled("This is not in scope for now")
+	@Disabled("This is not in scope for now")	// ignore this case
 	void testSomething3() {
 		System.out.println("Test: testSomething3");
 	}
 
 	@Test
 	void testSomething4() {
-		Assertions.fail("A falling test. . . ");
+		Assertions.fail("A falling test. . . ");	// mark as a fail
 	}
 }
