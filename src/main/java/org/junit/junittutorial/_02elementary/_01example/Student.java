@@ -28,4 +28,9 @@ public class Student {
 		return surname;
 	}
 
+	public void addCourse(Object lecturerCourseRecord) {
+		if (lecturerCourseRecord == null)
+			throw new IllegalArgumentException();
+	}
+
 }
