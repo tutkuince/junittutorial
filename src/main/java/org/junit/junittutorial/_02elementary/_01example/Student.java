@@ -30,7 +30,7 @@ public class Student {
 
 	public void addCourse(Object lecturerCourseRecord) {
 		if (lecturerCourseRecord == null)
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Can't add course with null lecturer course record");
 	}
 
 }
