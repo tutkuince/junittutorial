@@ -9,6 +9,8 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -17,10 +19,12 @@ import org.junit.jupiter.api.Test;
  * @since Sep 14, 2018
  */
 // @Disabled("No more valid tests")
+@Tag("student")
 public class StudentTest {
 
 	@Test
 	@DisplayName("Test every student must have an id, name and surname")
+	@Tag("createStudent")
 	void shouldCreateStudentWithIdNameAndSurname() {
 
 		Student stdTutku = new Student("1", "Tutku", "Ince");
@@ -53,6 +57,7 @@ public class StudentTest {
 	 */
 	@Test
 	@DisplayName("Test every student must have an id, name and surname with grouped assertions")
+	@Tag("createStudent")
 	void shoudCreateStudentWithIdNameAndSurnameWithGroupedAssertions() {
 
 		// In a grouped assertions all assertions are executed,
@@ -88,6 +93,7 @@ public class StudentTest {
 
 	@Test
 	@DisplayName("Got an exception when add a null lecturer couse record to student")
+	@Tags({ @Tag("addCourse"), @Tag("exceptional") })
 	void throwsExceptionWhenAddToNullCourseToStudent() {
 		final Student stdTutku = new Student("1", "Tutku", "Ince");
 
@@ -107,6 +113,7 @@ public class StudentTest {
 	 */
 	@Test
 	@DisplayName("Add course to a student less than 10ms")
+	@Tag("addCourse")
 	void addCourseToStudentWithTimeConstraint() {
 		assertTimeout(Duration.ofMillis(10), () -> {
 			// nothing will be done and this code run under 10ms
@@ -127,6 +134,7 @@ public class StudentTest {
 
 	@Test
 	@DisplayName("Test student creation at different environments")
+	@Tag("createStudent")
 	void shouldCreateStudentWithNameAndSurnameWithSpecificEnvironment() {
 		final Student stdTutku = new Student("1", "Tutku", "Ince");
 		
@@ -146,6 +154,7 @@ public class StudentTest {
 	@Test
 	@Disabled("No mor valid scenario")
 	@DisplayName("Test that student must have only number id")
+	@Tag("createStudent")
 	void shouldCreateStudentWithNumberId() {
 		assertThrows(IllegalArgumentException.class, () -> new Student("id", "Tutku", "Ince"));
 	}
