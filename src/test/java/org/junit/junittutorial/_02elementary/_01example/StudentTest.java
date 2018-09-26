@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
  *
  * @since Sep 14, 2018
  */
+// @Disabled("No more valid tests")
 public class StudentTest {
 
 	@Test
