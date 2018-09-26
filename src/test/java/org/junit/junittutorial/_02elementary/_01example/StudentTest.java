@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assumptions.*;
 import java.time.Duration;
 import java.util.stream.Stream;
 
-
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -140,5 +140,12 @@ public class StudentTest {
 				() -> assertEquals("Tutku", stdTutku.getName()),
 				() -> assertEquals("Ince", stdTutku.getSurname()),
 				() -> assertEquals("1", stdTutku.getId()));
+	}
+	
+	@Test
+	@Disabled("No mor valid scenario")
+	@DisplayName("Test that student must have only number id")
+	void shouldCreateStudentWithNumberId() {
+		assertThrows(IllegalArgumentException.class, () -> new Student("id", "Tutku", "Ince"));
 	}
 }
