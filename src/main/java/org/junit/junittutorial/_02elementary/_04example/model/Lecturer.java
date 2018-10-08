@@ -63,6 +63,10 @@ public class Lecturer {
 
 	public void addLecturerCourseRecord(LecturerCourseRecord lecturerCourseRecord) {
 
+		if (lecturerCourseRecord.getCourse() == null) {
+			throw new IllegalArgumentException("Can't add a null course to lecturer");
+		}
+
 		lecturerCourseRecord.setLecturer(this);
 		this.lecturerCourseRecords.add(lecturerCourseRecord);
 	}
