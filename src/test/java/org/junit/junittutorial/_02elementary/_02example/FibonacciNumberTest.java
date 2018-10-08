@@ -16,7 +16,7 @@ public class FibonacciNumberTest {
 	@DisplayName("Find Fibonacci Numbers for Specific Order")
 	void findFibonacciNumbers() {
 		FibonacciNumber fibonacciNumber = new FibonacciNumber();
-		// 1 1 2 3 5 7
+		// 1 1 2 3 5 8
 
 		assertThrows(IllegalArgumentException.class, () -> fibonacciNumber.find(0));
 
