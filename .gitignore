@@ -27,3 +27,6 @@ pom.xml
 pom.properties
 MANIFEST.MF
 .classpath
+
+*/target/*
+*/target/**
