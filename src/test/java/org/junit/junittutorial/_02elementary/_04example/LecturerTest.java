@@ -54,5 +54,12 @@ public class LecturerTest {
 		assertEquals(lecturer, lecturerCourseRecord.getLecturer());
 	}
 
-	
+	@Test
+	@DisplayName("Lecturer Throws illegal argument exception when a null course is add to")
+	void throwsIllegalArgumentExceptionWhenANullCourseIsAddedToLecturer() throws Exception {
+		final LecturerCourseRecord lecturerCourseRecord = new LecturerCourseRecord(null, new Semester());
+		final IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class,
+				() -> lecturer.addLecturerCourseRecord(lecturerCourseRecord));
+		assertEquals("Can't add a null course to lecturer", illegalArgumentException.getMessage());
+	}
 }
