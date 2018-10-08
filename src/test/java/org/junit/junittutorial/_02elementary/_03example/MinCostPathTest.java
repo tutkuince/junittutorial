@@ -17,7 +17,7 @@ public class MinCostPathTest {
 	 * matrix, int[][], start cell, target cell, Cell(row, column)
 	 * start cell or target cell is out of matrix bound		--- DONE
 	 * start cell equals target cell then return cost of start cell	--- DONE
-	 * find minimum cost path for one row matrix
+	 * find minimum cost path for one row matrix	--- DONE
 	 * find minimum cost path for multiple row matrix
 	 * right path cost, down path cost, diagonal path cost
 	 *  
@@ -69,4 +69,5 @@ public class MinCostPathTest {
 		assertEquals(15, minCostPath.find(matrix, cell(0, 0), cell(0, 2)));
 		assertEquals(16, minCostPath.find(matrix, cell(0, 2), cell(0, 3)));
 	}
+	
 }
