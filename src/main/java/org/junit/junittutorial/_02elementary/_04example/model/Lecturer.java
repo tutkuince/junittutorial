@@ -63,7 +63,7 @@ public class Lecturer {
 
 	public void addLecturerCourseRecord(LecturerCourseRecord lecturerCourseRecord) {
 
-		lecturerCourseRecord.setLecturer(this);
+		this.lecturerCourseRecords.add(lecturerCourseRecord);
 	}
 
 	public LecturerCourseRecord lecturerCourseRecord(Course course, Semester semester) {
