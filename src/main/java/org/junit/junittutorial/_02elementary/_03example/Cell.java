@@ -23,4 +23,14 @@ public class Cell {
 		return column;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if(!Cell.class.isInstance(obj))
+			return false;
+		
+		Cell cell = (Cell) obj;
+		
+		return (cell.getRow() == this.getRow() && cell.getColumn() == this.getColumn());
+	}
+
 }
