@@ -22,6 +22,11 @@ public class MinCostPathTest {
 	 * right path cost, down path cost, diagonal path cost
 	 *  
 	 */
+	
+	private Cell cell(int row, int column) {
+		return new Cell(row, column);
+	}
+	
 	private MinCostPath minCostPath;
 	
 	@BeforeEach
@@ -36,19 +41,24 @@ public class MinCostPathTest {
 		final int[][] matrix = { {4, 5, 6}, {7, 8, 1} };
 		
 		assertAll("Start cell must be in matrix",
-				() -> assertThrows(IllegalArgumentException.class, () -> minCostPath.find(matrix, new Cell(2, 1), new Cell(0, 2))),
-				() -> assertThrows(IllegalArgumentException.class,() -> minCostPath.find(matrix, new Cell(-1, 1), new Cell(0, 2)))
+				() -> assertThrows(IllegalArgumentException.class, () -> minCostPath.find(matrix, cell(2, 1), cell(0, 2))),
+				() -> assertThrows(IllegalArgumentException.class,() -> minCostPath.find(matrix, cell(-1, 1), cell(0, 2)))
 				);
 		
 		assertAll("Target cell must be in matrix",
-				() -> assertThrows(IllegalArgumentException.class, () -> minCostPath.find(matrix, new Cell(0, 0), new Cell(2, 2))),
-				() -> assertThrows(IllegalArgumentException.class, () -> minCostPath.find(matrix, new Cell(0, 0), new Cell(-1, 2)))
+				() -> assertThrows(IllegalArgumentException.class, () -> minCostPath.find(matrix, cell(0, 0), cell(2, 2))),
+				() -> assertThrows(IllegalArgumentException.class, () -> minCostPath.find(matrix, cell(0, 0), cell(-1, 2)))
 				);
 	}
 	
 	@Test
 	@DisplayName("Return the cost of start cell when the start cell equals to target cell")
 	void returnTheCostStartCellWhenTheStartCellEqualToTargetCell() throws Exception {
+		final int[][] matrix = { { 3, 5, 7, 9 } };
 		
+		assertEquals(3, minCostPath.find(matrix, cell(0, 0), cell(0, 0)));
+		assertEquals(7, minCostPath.find(matrix, cell(0, 2), cell(0, 2)));
 	}
+	
+	
 }
