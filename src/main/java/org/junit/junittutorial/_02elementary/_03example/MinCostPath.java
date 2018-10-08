@@ -10,8 +10,10 @@ public class MinCostPath {
 	public int find(int[][] matrix, Cell start, Cell target) {
 		
 		validateIfTheCellIsOutOfMatrixBound(matrix, start);
-		
 		validateIfTheCellIsOutOfMatrixBound(matrix, target);
+		
+		if(start.equals(target))
+			return matrix[start.getRow()][start.getColumn()];
 		
 		return 0;
 	}
