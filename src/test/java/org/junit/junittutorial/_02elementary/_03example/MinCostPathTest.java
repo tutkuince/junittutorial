@@ -14,7 +14,7 @@ public class MinCostPathTest {
 
 	/**
 	 * matrix, int[][], start cell, target cell, Cell(row, column)
-	 * start cell or target cell is out of matrix bound
+	 * start cell or target cell is out of matrix bound		--- DONE
 	 * start cell equals target cell then return cost of start cell
 	 * find minimum cost path for one row matrix
 	 * find minimum cost path for multiple row matrix
