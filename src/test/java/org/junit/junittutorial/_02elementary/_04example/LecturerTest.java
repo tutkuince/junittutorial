@@ -2,10 +2,12 @@ package org.junit.junittutorial._02elementary._04example;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDate;
 
 import org.junit.junittutorial._02elementary._04example.model.Course;
 import org.junit.junittutorial._02elementary._04example.model.Lecturer;
 import org.junit.junittutorial._02elementary._04example.model.LecturerCourseRecord;
+import org.junit.junittutorial._02elementary._04example.model.NotActiveSemesterException;
 import org.junit.junittutorial._02elementary._04example.model.Semester;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -61,5 +63,17 @@ public class LecturerTest {
 		final IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class,
 				() -> lecturer.addLecturerCourseRecord(lecturerCourseRecord));
 		assertEquals("Can't add a null course to lecturer", illegalArgumentException.getMessage());
+	}
+
+	@Test
+	@DisplayName("lecturer Throws not active semester exception when a course is added for not active semester")
+	void throwsNotActiveSemesterExceptionWhenACourseIsAddedForNotActiveSemesterToLecturer() throws Exception {
+		final Semester semester = new Semester(LocalDate.now().minusYears(1));
+
+		LecturerCourseRecord lecturerCourseRecord = new LecturerCourseRecord(new Course(), semester);
+
+		NotActiveSemesterException notActiveSemesterException = assertThrows(NotActiveSemesterException.class, () -> lecturer.addLecturerCourseRecord(lecturerCourseRecord));
+		assertEquals(semester.toString(), notActiveSemesterException.getMessage());
+		
 	}
 }
