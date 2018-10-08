@@ -2,6 +2,7 @@ package org.junit.junittutorial._02elementary._03example;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,12 +22,17 @@ public class MinCostPathTest {
 	 * right path cost, down path cost, diagonal path cost
 	 *  
 	 */
+	private MinCostPath minCostPath;
+	
+	@BeforeEach
+	void setUp() {
+		minCostPath = new MinCostPath();
+	}
 	
 	@Test
 	@DisplayName("Throws IllegalArgumentException when the start or target cell is out of matrix bound")
 	void throwsIllegalArgumentExceptionWhenTheCellIsOutOfMatrixBound() throws Exception {
 		
-		MinCostPath minCostPath = new MinCostPath();
 		final int[][] matrix = { {4, 5, 6}, {7, 8, 1} };
 		
 		assertAll("Start cell must be in matrix",
@@ -38,5 +44,11 @@ public class MinCostPathTest {
 				() -> assertThrows(IllegalArgumentException.class, () -> minCostPath.find(matrix, new Cell(0, 0), new Cell(2, 2))),
 				() -> assertThrows(IllegalArgumentException.class, () -> minCostPath.find(matrix, new Cell(0, 0), new Cell(-1, 2)))
 				);
+	}
+	
+	@Test
+	@DisplayName("Return the cost of start cell when the start cell equals to target cell")
+	void returnTheCostStartCellWhenTheStartCellEqualToTargetCell() throws Exception {
+		
 	}
 }
