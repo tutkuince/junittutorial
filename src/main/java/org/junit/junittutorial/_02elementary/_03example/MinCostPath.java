@@ -15,7 +15,15 @@ public class MinCostPath {
 		if(start.equals(target))
 			return matrix[start.getRow()][start.getColumn()];
 		
-		return 0;
+		Cell currentCell = start;
+		int cost = 0;
+		while(!currentCell.equals(target)) {
+			cost += matrix[currentCell.getRow()][currentCell.getColumn()];
+			currentCell = new Cell(currentCell.getRow(), currentCell.getColumn() + 1);
+		}
+		cost += matrix[currentCell.getRow()][currentCell.getColumn()];
+		
+		return cost;
 	}
 
 	private void validateIfTheCellIsOutOfMatrixBound(int[][] matrix, Cell cell) {
