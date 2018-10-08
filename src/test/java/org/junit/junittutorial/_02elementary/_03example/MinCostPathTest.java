@@ -70,4 +70,20 @@ public class MinCostPathTest {
 		assertEquals(16, minCostPath.find(matrix, cell(0, 2), cell(0, 3)));
 	}
 	
+	@Test
+	@DisplayName("Find minimum cost path for multiple row matrix")
+	void findMinCostPathForMultiRowMatrix() throws Exception {
+		
+		final int[][] matrix = { 
+				{ 1, 2, 3, 4 }, 
+				{ 1, 3, 1, 2 }, 
+				{ 1, 2, 4, 5 } 
+				};
+		
+		assertEquals(4, minCostPath.find(matrix, cell(0, 0), cell(1, 2)));
+		assertEquals(2, minCostPath.find(matrix, cell(0, 0), cell(1, 0)));
+		assertEquals(4, minCostPath.find(matrix, cell(0, 0), cell(2, 1)));
+		assertEquals(9, minCostPath.find(matrix, cell(0, 0), cell(2, 3)));
+				
+	}
 }
