@@ -20,11 +20,10 @@ import org.junit.jupiter.api.Test;
  */
 public class LecturerTest {
 	/**
-	 * When a lecturer course record is added to lecturer then lecturer course
-	 * record size increase Lecturer course record has lecturer when added to
-	 * lecturer Throws illegal argument exception when a null course is add to
-	 * lecturer Throws not active semester exception when a course is added for not
-	 * active semester
+	 * When a lecturer course record is added to lecturer then lecturer course record size increase 
+	 * Lecturer course record has lecturer when added to lecturer 
+	 * Throws illegal argument exception when a null course is add to lecturer 
+	 * Throws not active semester exception when a course is added for not active semester
 	 * 
 	 */
 	private Lecturer lecturer;
@@ -48,7 +47,7 @@ public class LecturerTest {
 	}
 
 	@Test
-	@DisplayName("Record size increase Lecturer course record has lecturer when added to")
+	@DisplayName("Lecturer course record has lecturer when added to lecturer")
 	void lecturerCourseRecordHasLecturerInfoWhenAddedToALecturer() throws Exception {
 		final LecturerCourseRecord lecturerCourseRecord = lecturerCourseRecord();
 		lecturer.addLecturerCourseRecord(lecturerCourseRecord);
@@ -57,7 +56,7 @@ public class LecturerTest {
 	}
 
 	@Test
-	@DisplayName("Lecturer Throws illegal argument exception when a null course is add to")
+	@DisplayName("Throws illegal argument exception when a null course is add to lecturer")
 	void throwsIllegalArgumentExceptionWhenANullCourseIsAddedToLecturer() throws Exception {
 		final LecturerCourseRecord lecturerCourseRecord = new LecturerCourseRecord(null, new Semester());
 		final IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class,
@@ -66,7 +65,7 @@ public class LecturerTest {
 	}
 
 	@Test
-	@DisplayName("lecturer Throws not active semester exception when a course is added for not active semester")
+	@DisplayName("Throws not active semester exception when a course is added for not active semester")
 	void throwsNotActiveSemesterExceptionWhenACourseIsAddedForNotActiveSemesterToLecturer() throws Exception {
 		final Semester semester = new Semester(LocalDate.now().minusYears(1));
 
