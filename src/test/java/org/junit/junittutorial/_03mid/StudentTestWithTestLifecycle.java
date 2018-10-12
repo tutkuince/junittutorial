@@ -19,7 +19,7 @@ public class StudentTestWithTestLifecycle {
 	private Student stdTutku = new Student("1", "Tutku", "Ince");
 	
 	@BeforeAll
-	void setUp() {
+	static void setUp() {
 		
 	}
 	
