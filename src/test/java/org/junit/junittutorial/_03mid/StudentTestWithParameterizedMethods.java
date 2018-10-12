@@ -18,6 +18,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -162,5 +163,28 @@ public class StudentTestWithParameterizedMethods {
 						Arguments.of("105", Course.CourseType.MANDATORY));
 		}
 	}
-	
+
+	@TestInstance(Lifecycle.PER_CLASS)
+	@Nested
+	class CsvSourceDemo {
+		
+		private int studentCourseSize = 0;
+
+		@BeforeAll
+		void setUp() {
+			student = new Student("1", "Tutku", "Ince");
+		}
+
+		@ParameterizedTest
+		@CsvSource({"'101,MANDATORY'", "'103,ELECTIVE'", "'105,MANDATORY'"})
+		void addCourseToStudent(String courseCode) {
+
+			final LecturerCourseRecord lecturerCourseRecord = new LecturerCourseRecord(new Course(courseCode),
+					new Semester());
+			student.addCourse(lecturerCourseRecord);
+			studentCourseSize++;
+			assertEquals(studentCourseSize, student.getStudentCourseRecords().size());
+			assertTrue(student.isTakeCourse(new Course(courseCode)));
+		}
+	}
 }
