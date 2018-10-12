@@ -266,4 +266,35 @@ public class StudentTestWithParameterizedMethods {
 		}
 		
 	}
+
+	@TestInstance(Lifecycle.PER_CLASS)
+	@Nested
+	class TypeConversionAndCustomDisplayNameDemo {
+		// enum conversion
+		@BeforeAll
+		void setUp() {
+			student = new Student("1", "Tutku", "Ince");
+		}
+
+		@ParameterizedTest
+		@ValueSource(strings = { "MANDATORY", "ELECTIVE" })
+		void addCourseToStudent(Course.CourseType courseType) {
+			final Course course = Course.newCourse().withCode(String.valueOf(new Random().nextInt(200)))
+					.withCourseType(courseType).course();
+
+			final LecturerCourseRecord courseRecord = new LecturerCourseRecord(course, new Semester());
+			student.addCourse(courseRecord);
+			assertFalse(student.getStudentCourseRecords().isEmpty());
+			assertTrue(student.isTakeCourse(course));
+
+		}
+		
+		
+		// user guide for other options
+		// factory method or constructor conversion
+		// conversion using SimpleConverter with @ConvertWith
+		// conversion @JavaTimeConversionPattern
+		
+		// display name {index}, {arguments}, {0} usage
+	}
 }
