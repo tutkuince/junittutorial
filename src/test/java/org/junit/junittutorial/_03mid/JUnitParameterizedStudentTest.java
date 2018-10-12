@@ -37,7 +37,10 @@ public class JUnitParameterizedStudentTest {
 	@Test
 	@DisplayName("Create Student")
 	@Tag("create")
-	void createStudent() throws Exception {
+	void createStudent(TestInfo testInfo) throws Exception {
+		// for method
+		assertTrue(testInfo.getTags().contains("create"));
+		
 		assertEquals("Tutku", student.getName());
 	}
 	
