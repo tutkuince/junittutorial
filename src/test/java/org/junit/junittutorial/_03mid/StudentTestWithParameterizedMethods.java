@@ -72,6 +72,19 @@ public class StudentTestWithParameterizedMethods {
 			assertTrue(student.isTakeCourse(course));
 
 		}
+		
+		@ParameterizedTest
+		@EnumSource(value = Course.CourseType.class, names = "MANDATORY")
+		void addMandatoryCourseToStudent(Course.CourseType courseType) {
+			final Course course = Course.newCourse().withCode(String.valueOf(new Random().nextInt(200)))
+					.withCourseType(courseType).course();
+
+			final LecturerCourseRecord courseRecord = new LecturerCourseRecord(course, new Semester());
+			student.addCourse(courseRecord);
+			assertFalse(student.getStudentCourseRecords().isEmpty());
+			assertTrue(student.isTakeCourse(course));
+
+		}
 	}
 	
 }
