@@ -14,10 +14,15 @@ import org.junit.jupiter.api.TestInfo;
  *
  * @since Oct 12, 2018
  */
+@DisplayName("Student Test with TestInfo and TestReporter Parameters")
 public class JUnitParameterizedStudentTest {
 	
 	private Student student;
 	
+	public JUnitParameterizedStudentTest(TestInfo testInfo) {
+		assertEquals("Student Test with TestInfo and TestReporter Parameters", testInfo.getDisplayName());
+	}
+
 	@BeforeEach
 	void setStudent(TestInfo testInfo) {
 		
