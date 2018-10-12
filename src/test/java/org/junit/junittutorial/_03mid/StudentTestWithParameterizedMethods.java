@@ -11,11 +11,13 @@ import org.junit.junittutorial._02elementary._04example.model.Course;
 import org.junit.junittutorial._02elementary._04example.model.LecturerCourseRecord;
 import org.junit.junittutorial._02elementary._04example.model.Semester;
 import org.junit.junittutorial._02elementary._04example.model.Student;
+import static org.junit.jupiter.api.Assumptions.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -125,8 +127,39 @@ public class StudentTestWithParameterizedMethods {
 			assertTrue(student.isTakeCourse(new Course(courseCode)));
 		}
 
+		// Factory Method
 		Stream<String> addCourseToStudent() {
 			return Stream.of("101", "103", "105");
+		}
+		
+		@ParameterizedTest
+		@MethodSource("courseWithCodeAndType")
+		void addCourseToStudent(String courseCode, Course.CourseType courseType) {
+
+			final Course course = new Course(courseCode);
+			course.setCourseType(courseType);
+			
+			final LecturerCourseRecord lecturerCourseRecord = new LecturerCourseRecord(new Course(courseCode),
+					new Semester());
+			student.addCourse(lecturerCourseRecord);
+			studentCourseSize++;
+			assertEquals(studentCourseSize, student.getStudentCourseRecords().size());
+			assertTrue(student.isTakeCourse(new Course(courseCode)));
+			assumingThat(courseCode.equals("101"),
+					() -> assertEquals(Course.CourseType.MANDATORY, courseType));
+			assumingThat(courseCode.equals("103"),
+					() -> assertEquals(Course.CourseType.ELECTIVE, courseType));
+			assumingThat(courseCode.equals("105"),
+					() -> assertEquals(Course.CourseType.MANDATORY, courseType));
+		}
+		
+		// Factory Method
+		Stream<Arguments> courseWithCodeAndType(){
+			return Stream
+					.of(
+						Arguments.of("101", Course.CourseType.MANDATORY),
+						Arguments.of("103", Course.CourseType.ELECTIVE),
+						Arguments.of("105", Course.CourseType.MANDATORY));
 		}
 	}
 	
