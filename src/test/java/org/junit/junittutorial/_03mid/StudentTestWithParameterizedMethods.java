@@ -14,6 +14,7 @@ import org.junit.junittutorial._02elementary._04example.model.Semester;
 import org.junit.junittutorial._02elementary._04example.model.Student;
 import static org.junit.jupiter.api.Assumptions.*;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -184,7 +185,8 @@ public class StudentTestWithParameterizedMethods {
 			student = new Student("1", "Tutku", "Ince");
 		}
 
-		@ParameterizedTest
+		@DisplayName("Add Course to Student")
+		@ParameterizedTest(name = "{index} ==> Parameters= first:{0}, second:{1}")
 		@CsvSource({"101,MANDATORY", "103,ELECTIVE", "105,MANDATORY"})
 		void addCourseToStudent(String courseCode, Course.CourseType courseType) {
 
@@ -318,7 +320,8 @@ public class StudentTestWithParameterizedMethods {
 		}
 		
 		// conversion @JavaTimeConversionPattern
-		@ParameterizedTest
+		@DisplayName("Add course with localDate info")
+		@ParameterizedTest(name = "{index} ==> Parameters: {arguments}")
 		@ValueSource(strings = { "01.09.2018", "01.06.2018" })
 		void addCourseToStudentWithLocalDate(@JavaTimeConversionPattern("dd.MM.yyyy") LocalDate localDate) {
 			Course course = Course.newCourse().withCode(String.valueOf(new Random().nextInt(100))).course();
