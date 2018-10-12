@@ -19,6 +19,7 @@ public class JUnitParameterizedStudentTest {
 	
 	private Student student;
 	
+	// for class
 	public JUnitParameterizedStudentTest(TestInfo testInfo) {
 		assertEquals("Student Test with TestInfo and TestReporter Parameters", testInfo.getDisplayName());
 	}
