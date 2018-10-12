@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.Test;
 public class PrimeFactorsTest {
 	
 	@Test
+	@DisplayName("Find prime factors of number.")
 	void findPrimeFactors() throws Exception {
 		PrimeFactors primeFactors = new PrimeFactors();
 		
