@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.time.LocalDate;
 import java.util.Random;
 import java.util.stream.Stream;
 
@@ -20,6 +21,7 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.ArgumentConversionException;
 import org.junit.jupiter.params.converter.ConvertWith;
+import org.junit.jupiter.params.converter.JavaTimeConversionPattern;
 import org.junit.jupiter.params.converter.SimpleArgumentConverter;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
@@ -316,6 +318,16 @@ public class StudentTestWithParameterizedMethods {
 		}
 		
 		// conversion @JavaTimeConversionPattern
+		@ParameterizedTest
+		@ValueSource(strings = { "01.09.2018", "01.06.2018" })
+		void addCourseToStudentWithLocalDate(@JavaTimeConversionPattern("dd.MM.yyyy") LocalDate localDate) {
+			Course course = Course.newCourse().withCode(String.valueOf(new Random().nextInt(100))).course();
+			final LecturerCourseRecord courseRecord = new LecturerCourseRecord(course, new Semester(localDate));
+			student.addCourse(courseRecord);
+			assertFalse(student.getStudentCourseRecords().isEmpty());
+			assertTrue(student.isTakeCourse(course));
+
+		}
 		
 		// display name {index}, {arguments}, {0} usage
 	}
