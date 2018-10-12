@@ -290,8 +290,17 @@ public class StudentTestWithParameterizedMethods {
 		}
 		
 		
-		// user guide for other options
 		// factory method or constructor conversion
+		@ParameterizedTest
+		@ValueSource(strings = { "101", "103" })
+		void addCourseToStudent(Course course) {
+			final LecturerCourseRecord courseRecord = new LecturerCourseRecord(course, new Semester());
+			student.addCourse(courseRecord);
+			assertFalse(student.getStudentCourseRecords().isEmpty());
+			assertTrue(student.isTakeCourse(course));
+
+		}
+		
 		// conversion using SimpleConverter with @ConvertWith
 		// conversion @JavaTimeConversionPattern
 		
