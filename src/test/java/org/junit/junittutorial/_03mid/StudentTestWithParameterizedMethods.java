@@ -18,6 +18,9 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.converter.ArgumentConversionException;
+import org.junit.jupiter.params.converter.ConvertWith;
+import org.junit.jupiter.params.converter.SimpleArgumentConverter;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.provider.ArgumentsSource;
@@ -302,8 +305,27 @@ public class StudentTestWithParameterizedMethods {
 		}
 		
 		// conversion using SimpleConverter with @ConvertWith
+		@ParameterizedTest
+		@ValueSource(strings = { "101", "103" })
+		void addCourseToStudentWithConverter(@ConvertWith(CourseConverter.class) Course course) {
+			final LecturerCourseRecord courseRecord = new LecturerCourseRecord(course, new Semester());
+			student.addCourse(courseRecord);
+			assertFalse(student.getStudentCourseRecords().isEmpty());
+			assertTrue(student.isTakeCourse(course));
+
+		}
+		
 		// conversion @JavaTimeConversionPattern
 		
 		// display name {index}, {arguments}, {0} usage
+	}
+	
+	static class CourseConverter extends SimpleArgumentConverter {
+
+		@Override
+		protected Object convert(Object source, Class<?> arg1) throws ArgumentConversionException {
+			return new Course((String) source);
+		}
+		
 	}
 }
