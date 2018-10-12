@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
  *
  * @since Oct 12, 2018
  */
-public class StudentTestWithDefaultMethods implements CreateDomain<Student> {
+public class StudentTestWithDefaultMethods implements CreateDomain<Student>, TestLifecycleReporter {
 
 	@Override
 	public Student createDomain() {
