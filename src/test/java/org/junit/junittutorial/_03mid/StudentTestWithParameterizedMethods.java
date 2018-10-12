@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Random;
+import java.util.stream.Stream;
 
 import org.junit.junittutorial._02elementary._04example.model.Course;
 import org.junit.junittutorial._02elementary._04example.model.LecturerCourseRecord;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 /**
@@ -97,6 +99,34 @@ public class StudentTestWithParameterizedMethods {
 			assertFalse(student.getStudentCourseRecords().isEmpty());
 			assertTrue(student.isTakeCourse(course));
 
+		}
+	}
+	
+	@TestInstance(Lifecycle.PER_CLASS)
+	@Nested
+	class MethodSourceDemo {
+
+		private int studentCourseSize = 0;
+
+		@BeforeAll
+		void setUp() {
+			student = new Student("1", "Tutku", "Ince");
+		}
+
+		@ParameterizedTest
+		@MethodSource
+		void addCourseToStudent(String courseCode) {
+
+			final LecturerCourseRecord lecturerCourseRecord = new LecturerCourseRecord(new Course(courseCode),
+					new Semester());
+			student.addCourse(lecturerCourseRecord);
+			studentCourseSize++;
+			assertEquals(studentCourseSize, student.getStudentCourseRecords().size());
+			assertTrue(student.isTakeCourse(new Course(courseCode)));
+		}
+
+		Stream<String> addCourseToStudent() {
+			return Stream.of("101", "103", "105");
 		}
 	}
 	
