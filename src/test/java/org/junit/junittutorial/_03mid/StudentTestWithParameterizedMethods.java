@@ -18,6 +18,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -176,15 +177,45 @@ public class StudentTestWithParameterizedMethods {
 		}
 
 		@ParameterizedTest
-		@CsvSource({"'101,MANDATORY'", "'103,ELECTIVE'", "'105,MANDATORY'"})
-		void addCourseToStudent(String courseCode) {
+		@CsvSource({"101,MANDATORY", "103,ELECTIVE", "105,MANDATORY"})
+		void addCourseToStudent(String courseCode, Course.CourseType courseType) {
 
+			final Course course = new Course(courseCode);
+			course.setCourseType(courseType);
+			
 			final LecturerCourseRecord lecturerCourseRecord = new LecturerCourseRecord(new Course(courseCode),
 					new Semester());
 			student.addCourse(lecturerCourseRecord);
 			studentCourseSize++;
 			assertEquals(studentCourseSize, student.getStudentCourseRecords().size());
 			assertTrue(student.isTakeCourse(new Course(courseCode)));
+			assumingThat(courseCode.equals("101"),
+					() -> assertEquals(Course.CourseType.MANDATORY, courseType));
+			assumingThat(courseCode.equals("103"),
+					() -> assertEquals(Course.CourseType.ELECTIVE, courseType));
+			assumingThat(courseCode.equals("105"),
+					() -> assertEquals(Course.CourseType.MANDATORY, courseType));
+		}
+		
+		@ParameterizedTest
+		@CsvFileSource(resources = "/courseCodeAndTypes.csv", numLinesToSkip = 1)
+		void addCourseToStudentWithCsvFile(String courseCode, Course.CourseType courseType) {
+
+			final Course course = new Course(courseCode);
+			course.setCourseType(courseType);
+			
+			final LecturerCourseRecord lecturerCourseRecord = new LecturerCourseRecord(new Course(courseCode),
+					new Semester());
+			student.addCourse(lecturerCourseRecord);
+			studentCourseSize++;
+			assertEquals(studentCourseSize, student.getStudentCourseRecords().size());
+			assertTrue(student.isTakeCourse(new Course(courseCode)));
+			assumingThat(courseCode.equals("101"),
+					() -> assertEquals(Course.CourseType.MANDATORY, courseType));
+			assumingThat(courseCode.equals("103"),
+					() -> assertEquals(Course.CourseType.ELECTIVE, courseType));
+			assumingThat(courseCode.equals("105"),
+					() -> assertEquals(Course.CourseType.MANDATORY, courseType));
 		}
 	}
 }
