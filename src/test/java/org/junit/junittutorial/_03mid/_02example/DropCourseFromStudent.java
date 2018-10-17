@@ -20,9 +20,18 @@ public class DropCourseFromStudent {
 	
 	private Semester addDropPeriodOpenSemester() {
 		final Semester activeSemester = new Semester();
-		final LocalDate semesterDate = LocalDate.of(activeSemester.getYear(), activeSemester.getTerm().getStartMonth(), 1);
+		final LocalDate semesterDate = LocalDate.of(activeSemester.getYear(), activeSemester.getTerm().getStartMonth(),
+				1);
 		final LocalDate now = LocalDate.now();
 		activeSemester.setAddDropPeriodInWeek(Long.valueOf(semesterDate.until(now, ChronoUnit.WEEKS)).intValue());
+		return activeSemester;
+	}
+
+	private Semester addDropPeriodCloseSemester() {
+		final Semester activeSemester = new Semester();
+		activeSemester.setAddDropPeriodInWeek(0);
+		if (LocalDate.now().getMonthValue() == 1)
+			activeSemester.setAddDropPeriodInWeek(-1);
 		return activeSemester;
 	}
 }
