@@ -8,6 +8,8 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.stream.Stream;
 
+import org.junit.junittutorial._02elementary._04example.model.Course;
+import org.junit.junittutorial._02elementary._04example.model.LecturerCourseRecord;
 import org.junit.junittutorial._02elementary._04example.model.Semester;
 import org.junit.junittutorial._02elementary._04example.model.Student;
 import org.junit.jupiter.api.DynamicTest;
@@ -23,9 +25,10 @@ public class DropCourseFromStudent {
 	// throws illegal argument exception for null lecturer course record
 	// throws illegal argument exception if the student did't register course before
 	// throws not active semester exception if the semester is not active
-	// throws not active semester exception if the add drop period is closed for the semester
+	// throws not active semester exception if the add drop period is closed for the
+	// semester
 	// drop course from student
-	
+
 	@TestFactory
 	Stream<DynamicTest> dropCourseFromStudentFactory() throws Exception {
 
@@ -33,7 +36,11 @@ public class DropCourseFromStudent {
 
 		return Stream.of(dynamicTest("throws illegal argument exception for null lecturer course record", () -> {
 			assertThrows(IllegalArgumentException.class, () -> student.dropCourse(null));
-		}));
+		}), dynamicTest("throws illegal argument exception if the student did't register course before", () -> {
+			final LecturerCourseRecord lecturerCourseRecord = new LecturerCourseRecord(new Course("101"), new Semester());
+			assertThrows(IllegalArgumentException.class, () -> student.dropCourse(lecturerCourseRecord));
+		})
+				);
 	}
 
 	private Semester addDropPeriodOpenSemester() {
