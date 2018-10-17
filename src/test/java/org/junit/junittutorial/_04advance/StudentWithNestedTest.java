@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 //import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -24,6 +25,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
  */
 // @Disabled("No more valid tests")
 //@ExtendWith(TestLoggerExtension.class)
+@ExtendWith(DropCourseConditionExtension.class)
 @Tag("student")
 public class StudentWithNestedTest {
 
