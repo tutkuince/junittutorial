@@ -49,6 +49,12 @@ public class DropCourseFromStudent {
 				final LecturerCourseRecord lecturerCourseRecord = new LecturerCourseRecord(new Course("101"), notActiveSemester);
 				Student stdUgur = new Student("1", "Ugur", "Batikan", Set.of(new StudentCourseRecord(lecturerCourseRecord)));
 				assertThrows(NotActiveSemesterException.class, () -> stdUgur.dropCourse(lecturerCourseRecord));
+		}), dynamicTest("throws not active semester exception if the add drop period is closed for the", () -> {
+				final Semester addDropPeriodClosedSemester = addDropPeriodCloseSemester();
+				Assumptions.assumeTrue(!addDropPeriodClosedSemester.isAddDropAllowed());
+				final LecturerCourseRecord lecturerCourseRecord = new LecturerCourseRecord(new Course("101"), addDropPeriodClosedSemester);
+				Student stdUgur = new Student("1", "Ugur", "Batikan", Set.of(new StudentCourseRecord(lecturerCourseRecord)));
+				assertThrows(NotActiveSemesterException.class, () -> stdUgur.dropCourse(lecturerCourseRecord));
 		})
 				
 				);
