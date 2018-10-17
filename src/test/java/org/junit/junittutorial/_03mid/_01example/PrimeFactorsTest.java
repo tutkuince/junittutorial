@@ -1,18 +1,22 @@
 package org.junit.junittutorial._03mid._01example;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.DynamicTest.*;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.junit.junittutorial._03mid.PrimeFactors;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -64,5 +68,12 @@ public class PrimeFactorsTest {
 	@ValueSource(ints = { 1, 2, 3, 4, 5, 6, 7, 8, 9 })
 	void generateWithParameterizedTest(Integer number) throws Exception {
 		assertEquals(primeFactorExpectations.get(number), PrimeFactors.generate(number));
+	}
+
+	@TestFactory
+	Stream<DynamicTest> generateWithDynamicTest() throws Exception {
+
+		return Stream.of(1, 2, 3, 4, 5, 6, 7, 8, 9).map(number -> dynamicTest("Generate prime factors for " + number,
+				() -> assertEquals(primeFactorExpectations.get(number), PrimeFactors.generate(number))));
 	}
 }
