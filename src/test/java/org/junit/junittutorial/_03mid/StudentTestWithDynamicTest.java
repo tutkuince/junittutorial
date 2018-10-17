@@ -14,6 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DynamicNode;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
+import org.junit.jupiter.api.TestReporter;
 import org.junit.jupiter.api.function.ThrowingConsumer;
 
 /**
@@ -31,7 +32,7 @@ public class StudentTestWithDynamicTest {
 	}
 
 	@TestFactory
-	Stream<DynamicNode> addCourseToStudentWithCourseCodeAndCourseType() throws Exception {
+	Stream<DynamicNode> addCourseToStudentWithCourseCodeAndCourseType(TestReporter reporter) throws Exception {
 
 		return Stream.of("101", "103", "105")
 				.map(courseCode -> dynamicContainer("Add course<" + courseCode + "> to student",
@@ -44,6 +45,7 @@ public class StudentTestWithDynamicTest {
 											new Semester());
 									student.addCourse(lecturerCourseRecord);
 									assertTrue(student.isTakeCourse(course));
+									reporter.publishEntry("Course Size", String.valueOf(student.getStudentCourseRecords().size()));
 								}))));
 	}
 
