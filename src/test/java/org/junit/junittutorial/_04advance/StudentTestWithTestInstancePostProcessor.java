@@ -5,8 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -16,7 +14,6 @@ import org.junit.junittutorial._02elementary._04example.model.NotActiveSemesterE
 import org.junit.junittutorial._02elementary._04example.model.Semester;
 import org.junit.junittutorial._02elementary._04example.model.Student;
 import org.junit.junittutorial._02elementary._04example.model.StudentCourseRecord;
-import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Nested;
@@ -44,6 +41,33 @@ public class StudentTestWithTestInstancePostProcessor {
 		// drop course from student
 		
 		private Student student;
+		private Semester addDropPeriodOpenSemester;
+		private Semester addDropPeriodCloseSemester;
+		private Semester notActiveSemester;
+		
+		public Semester getAddDropPeriodOpenSemester() {
+			return addDropPeriodOpenSemester;
+		}
+
+		public void setAddDropPeriodOpenSemester(Semester addDropPeriodOpenSemester) {
+			this.addDropPeriodOpenSemester = addDropPeriodOpenSemester;
+		}
+
+		public Semester getAddDropPeriodCloseSemester() {
+			return addDropPeriodCloseSemester;
+		}
+
+		public void setAddDropPeriodCloseSemester(Semester addDropPeriodCloseSemester) {
+			this.addDropPeriodCloseSemester = addDropPeriodCloseSemester;
+		}
+
+		public Semester getNotActiveSemester() {
+			return notActiveSemester;
+		}
+
+		public void setNotActiveSemester(Semester notActiveSemester) {
+			this.notActiveSemester = notActiveSemester;
+		}
 
 		public Student getStudent() {
 			return student;
@@ -65,21 +89,15 @@ public class StudentTestWithTestInstancePostProcessor {
 					final LecturerCourseRecord lecturerCourseRecord = new LecturerCourseRecord(new Course("101"), new Semester());
 					assertThrows(IllegalArgumentException.class, () -> student.dropCourse(lecturerCourseRecord));
 			}), dynamicTest("throws not active semester exception if the semester is not active", () -> {
-					final Semester notActiveSemester = notActiveSemester();
-					Assumptions.assumeTrue(!notActiveSemester().isActive());
 					final LecturerCourseRecord lecturerCourseRecord = new LecturerCourseRecord(new Course("101"), notActiveSemester);
 					Student stdUgur = new Student("1", "Ugur", "Batikan", Set.of(new StudentCourseRecord(lecturerCourseRecord)));
 					assertThrows(NotActiveSemesterException.class, () -> stdUgur.dropCourse(lecturerCourseRecord));
 			}), dynamicTest("throws not active semester exception if the add drop period is closed for the", () -> {
-					final Semester addDropPeriodClosedSemester = addDropPeriodCloseSemester();
-					Assumptions.assumeTrue(!addDropPeriodClosedSemester.isAddDropAllowed());
-					final LecturerCourseRecord lecturerCourseRecord = new LecturerCourseRecord(new Course("101"), addDropPeriodClosedSemester);
+					final LecturerCourseRecord lecturerCourseRecord = new LecturerCourseRecord(new Course("101"), addDropPeriodCloseSemester);
 					Student stdUgur = new Student("1", "Ugur", "Batikan", Set.of(new StudentCourseRecord(lecturerCourseRecord)));
 					assertThrows(NotActiveSemesterException.class, () -> stdUgur.dropCourse(lecturerCourseRecord));
 			}), dynamicTest("drop course from student", () -> {
-					final Semester addDropPeriodOpenSemseter = addDropPeriodOpenSemester();
-					Assumptions.assumeTrue(addDropPeriodOpenSemseter.isAddDropAllowed());
-					final LecturerCourseRecord lecturerCourseRecord = new LecturerCourseRecord(new Course("101"), addDropPeriodOpenSemseter);
+					final LecturerCourseRecord lecturerCourseRecord = new LecturerCourseRecord(new Course("101"), addDropPeriodOpenSemester);
 					Student stdUgur = new Student("1", "Ugur", "Batikan", Set.of(new StudentCourseRecord(lecturerCourseRecord)));
 					assertEquals(1, stdUgur.getStudentCourseRecords().size());
 					stdUgur.dropCourse(lecturerCourseRecord);
@@ -87,28 +105,6 @@ public class StudentTestWithTestInstancePostProcessor {
 			})
 					
 					);
-		}
-
-		private Semester addDropPeriodOpenSemester() {
-			final Semester activeSemester = new Semester();
-			final LocalDate semesterDate = LocalDate.of(activeSemester.getYear(),
-					activeSemester.getTerm().getStartMonth(), 1);
-			final LocalDate now = LocalDate.now();
-			activeSemester.setAddDropPeriodInWeek(Long.valueOf(semesterDate.until(now, ChronoUnit.WEEKS) + 1).intValue());
-			return activeSemester;
-		}
-
-		private Semester addDropPeriodCloseSemester() {
-			final Semester activeSemester = new Semester();
-			activeSemester.setAddDropPeriodInWeek(0);
-			if (LocalDate.now().getMonthValue() == 1)
-				activeSemester.setAddDropPeriodInWeek(-1);
-			return activeSemester;
-		}
-
-		private Semester notActiveSemester() {
-			final Semester activeSemester = new Semester();
-			return new Semester(LocalDate.of(activeSemester.getYear() - 1, 1, 1));
 		}
 	}
 }
