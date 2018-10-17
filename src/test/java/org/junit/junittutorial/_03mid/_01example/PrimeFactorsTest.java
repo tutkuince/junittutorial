@@ -15,6 +15,8 @@ import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * @author Tutku Ince
@@ -56,5 +58,11 @@ public class PrimeFactorsTest {
 	void generateWithRepeatedTest(RepetitionInfo repetitionInfo) throws Exception {
 		assertEquals(primeFactorExpectations.get(repetitionInfo.getCurrentRepetition()),
 				PrimeFactors.generate(repetitionInfo.getCurrentRepetition()));
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = { 1, 2, 3, 4, 5, 6, 7, 8, 9 })
+	void generateWithParameterizedTest(Integer number) throws Exception {
+		assertEquals(primeFactorExpectations.get(number), PrimeFactors.generate(number));
 	}
 }
