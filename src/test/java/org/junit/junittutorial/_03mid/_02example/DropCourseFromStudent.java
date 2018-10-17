@@ -28,8 +28,7 @@ public class DropCourseFromStudent {
 	// throws illegal argument exception for null lecturer course record
 	// throws illegal argument exception if the student did't register course before
 	// throws not active semester exception if the semester is not active
-	// throws not active semester exception if the add drop period is closed for the
-	// semester
+	// throws not active semester exception if the add drop period is closed for the semester
 	// drop course from student
 
 	@TestFactory
@@ -55,6 +54,14 @@ public class DropCourseFromStudent {
 				final LecturerCourseRecord lecturerCourseRecord = new LecturerCourseRecord(new Course("101"), addDropPeriodClosedSemester);
 				Student stdUgur = new Student("1", "Ugur", "Batikan", Set.of(new StudentCourseRecord(lecturerCourseRecord)));
 				assertThrows(NotActiveSemesterException.class, () -> stdUgur.dropCourse(lecturerCourseRecord));
+		}), dynamicTest("drop course from student", () -> {
+				final Semester addDropPeriodOpenSemseter = addDropPeriodOpenSemester();
+				Assumptions.assumeTrue(addDropPeriodOpenSemseter.isAddDropAllowed());
+				final LecturerCourseRecord lecturerCourseRecord = new LecturerCourseRecord(new Course("101"), addDropPeriodOpenSemseter);
+				Student stdUgur = new Student("1", "Ugur", "Batikan", Set.of(new StudentCourseRecord(lecturerCourseRecord)));
+				assertEquals(1, stdUgur.getStudentCourseRecords().size());
+				stdUgur.dropCourse(lecturerCourseRecord);
+				assertTrue(stdUgur.getStudentCourseRecords().isEmpty());
 		})
 				
 				);
